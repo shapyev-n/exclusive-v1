@@ -1,0 +1,338 @@
+.navToPay {
+  padding: 10px 30px;
+  background: #000;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 10px;
+  margin: 0 auto;
+  transform: translateY(10px);
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    opacity 0.3s ease-out;
+  transition: 0.3s;
+  opacity: 0.8;
+
+  &:hover {
+    transform: translateY(0);
+    scale: 1.05;
+    opacity: 1;
+  }
+}
+
+.back {
+  padding: 5px 10px;
+  background: #f2f2f2;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background-size: contain;
+  cursor: pointer;
+  transition: transform 0.3s ease-out;
+  opacity: 0.8;
+
+  &:hover {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
+}
+
+.table {
+  width: 100%;
+
+  .tbody {
+    width: 100%;
+
+    .tdNumbered {
+      min-width: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tr {
+      display: flex;
+      width: 100%;
+
+      &:hover {
+        background: linear-gradient(to right, #f2f2f2, #fff);
+
+        .scssTD {
+          box-shadow: #000 0px 20px 20px -5px;
+        }
+
+        .del {
+          display: block;
+        }
+
+        .num {
+          display: none;
+        }
+      }
+
+      .del {
+        display: none;
+      }
+    }
+
+    .scssTR {
+      display: flex;
+      width: 100%;
+      border: 1px solid #000;
+    }
+
+    .scssTD {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px;
+      font-size: 16px;
+      box-shadow: #000 0px 10px 10px -4px;
+      transition: box-shadow 0.3s ease-in-out;
+      height: 100px;
+
+      img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+      }
+    }
+
+    .quantityMobile {
+      max-width: 150px;
+    }
+
+    .total {
+      max-width: 150px;
+
+      .spanTotal {
+        color: #000;
+        margin-left: auto;
+        font-weight: 600;
+      }
+    }
+
+    .productNameTable {
+      min-width: 250px;
+      justify-content: flex-start;
+
+      img {
+        width: 60px;
+        height: auto;
+        object-fit: cover;
+      }
+
+      a {
+        display: inline-block;
+        width: 100%; // This ensures the link takes up the full width of its container
+        color: #000;
+        white-space: nowrap; // Prevents text from wrapping onto a new line
+        overflow: hidden; // Hides any overflowing text
+        text-overflow: ellipsis; // Adds "..." when the text overflows
+        transition: 0.3s;
+
+        &:hover {
+          color: #5f35de;
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .productName {
+      min-width: 450px;
+      justify-content: flex-start;
+
+      img {
+        width: 60px;
+        height: auto;
+        object-fit: cover;
+      }
+
+      a {
+        display: inline-block;
+        width: 100%; // This ensures the link takes up the full width of its container
+        color: #000;
+        white-space: nowrap; // Prevents text from wrapping onto a new line
+        overflow: hidden; // Hides any overflowing text
+        text-overflow: ellipsis; // Adds "..." when the text overflows
+        transition: 0.3s;
+
+        &:hover {
+          color: #5f35de;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.mobCard {
+  width: 100%;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 20px 20px -8px #000;
+  transition: box-shadow 0.3s ease;
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    .mobImg {
+      width: 100px;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .title {
+      color: #000;
+      margin: 0 auto;
+      font-weight: bold;
+      text-align: center;
+      display: -webkit-box;
+      /* Устанавливаем flex-контейнер */
+      -webkit-line-clamp: 2;
+      /* Ограничиваем до 2 строк */
+      -webkit-box-orient: vertical;
+      /* Указываем вертикальную ориентацию */
+      overflow: hidden;
+      /* Скрываем остальное */
+      text-overflow: ellipsis;
+      /* Добавляем многоточие */
+    }
+  }
+
+  .mobPriceBox {
+    width: 100px;
+    text-align: center;
+    margin-top: 10px;
+
+  }
+
+  .mobQuantity {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+
+    .mobDelete {
+      border: 1px solid red;
+      background: #fff;
+      color: red;
+      font-size: 14px;
+      height: 20px;
+      margin-left: auto;
+    }
+  }
+
+  .spanTotal {
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: right;
+  }
+
+}
+
+.center {
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+}
+
+.row {
+  display: -ms-flexbox; // IE10
+  display: flex;
+  -ms-flex-wrap: wrap; // IE10
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.col_25 {
+  -ms-flex: 25%; // IE10
+  flex: 25%;
+}
+
+.col_50 {
+  -ms-flex: 50%; // IE10
+  flex: 50%;
+}
+
+.col_75 {
+  -ms-flex: 75%; // IE10
+  flex: 75%;
+}
+
+.col_25,
+.col_50,
+.col_75 {
+  padding: 0 16px;
+}
+
+.container {
+  width: 100%;
+  background-color: #f2f2f2;
+  padding: 5px 20px 15px 20px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 40px 20px;
+}
+
+.formInput {
+  .inp {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+}
+
+.icon-container {
+  margin-bottom: 20px;
+  padding: 7px 0;
+  font-size: 24px;
+}
+
+.btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+
+  &:hover {
+    background-color: #45a049;
+  }
+}
+
+span.price {
+  float: right;
+  color: grey;
+}
+
+// Responsive layout for screens less than 800px wide
+@media (max-width: 800px) {
+  .row {
+    flex-direction: column-reverse;
+  }
+
+  .col_25 {
+    margin-bottom: 20px;
+  }
+}

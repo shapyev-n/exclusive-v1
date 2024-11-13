@@ -1,0 +1,44 @@
+.Categories {
+  padding-top: 20px;
+  border-right: 1px solid rgba(128, 128, 128, 0.562);
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    .box {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px;
+      box-shadow: 0px 15px 15px -5px #000000a6;
+      border-radius: 10px;
+      transition: box-shadow 0.3s ease-in-out;
+
+      &:hover {
+        box-shadow: 0px 20px 20px -4px #000000;
+
+      }
+
+      &.active {
+        background: #000;
+
+        span,
+        p {
+          color: #fff;
+        }
+      }
+
+      span {
+        font-size: 35px;
+      }
+
+      p {
+        font-family: sans-serif;
+      }
+    }
+  }
+}

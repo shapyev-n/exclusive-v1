@@ -1,0 +1,40 @@
+.AdminPage {
+  padding: 50px 0;
+
+  .content {
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 40px;
+    }
+
+    form {
+      max-width: 600px;
+      width: 100%;
+      margin-inline: auto;
+      display: flex;
+      flex-direction: column;
+
+      select,
+      input,
+      textarea {
+        width: 100%;
+        padding: 10px 20px;
+        margin-top: 20px;
+      }
+
+      span {
+        color: red;
+        font-size: 14px;
+        opacity: 0.7;
+        font-weight: 700;
+      }
+
+      button {
+        margin-top: 20px;
+
+      }
+
+    }
+  }
+}

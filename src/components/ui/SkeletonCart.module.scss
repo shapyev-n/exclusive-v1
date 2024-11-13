@@ -1,0 +1,64 @@
+.cart {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  border: 1px solid rgba(128, 128, 128, 0.199);
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+
+  .svg {
+    position: relative;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    background: rgba(119, 117, 117, 0.1);
+
+    .skeletonImage {
+      width: 200px;
+      height: 150px;
+      background-color: #e0e0e0;
+      border-radius: 8px;
+      animation: skeleton-loading 1.5s infinite;
+    }
+  }
+
+  .title {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    padding: 15px;
+
+    .skeletonTitle,
+    .skeletonPrice,
+    .skeletonRate {
+      background-color: #e0e0e0;
+      border-radius: 4px;
+      animation: skeleton-loading 1.5s infinite;
+    }
+
+    .skeletonTitle {
+      width: 60%;
+      height: 20px;
+    }
+
+    .skeletonPrice {
+      width: 40%;
+      height: 16px;
+    }
+
+    .skeletonRate {
+      width: 80%;
+      height: 16px;
+    }
+  }
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
