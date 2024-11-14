@@ -4,7 +4,6 @@ import scss from "./ExploreProducts.module.scss";
 import { useGetProductsQuery } from "../../../../../redux/api/product";
 import SkeletonCart from "../../../../ui/SkeletonCart";
 import { useGetMeQuery } from "../../../../../redux/api/auth";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -14,7 +13,6 @@ import { useFavoriteStore } from "../../../../../store/favoriteStore";
 const ExploreProducts: FC = () => {
   const { data: product, isLoading } = useGetProductsQuery();
   const { data: user = null } = useGetMeQuery();
-  const { data: session = null } = useSession();
   const route = useRouter();
 
   const { basketItems, addToBasket, loadBasket } = useBasketStore();
@@ -40,7 +38,7 @@ const ExploreProducts: FC = () => {
     )
       return;
 
-    if (!user?.id && !session) {
+    if (!user?.id ) {
       route.push("/sign-in");
       return;
     }
@@ -52,7 +50,7 @@ const ExploreProducts: FC = () => {
     if (favoriteData.find((favoriteItem) => favoriteItem.id === item.id))
       return;
 
-    if (!user && !session) {
+    if (!user ) {
       route.push("/sign-in");
       return;
     }

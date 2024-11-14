@@ -32,7 +32,6 @@ export default function PaymentPage() {
     const handleSubmit = (e) => {
       e.preventDefault();
       console.log("Form submitted:", formData);
-      // Handle form submission logic, such as sending data to a server
     };
 
   return (

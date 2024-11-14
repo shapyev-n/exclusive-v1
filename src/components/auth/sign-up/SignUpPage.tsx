@@ -6,7 +6,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { signIn, useSession } from "next-auth/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useGetMeQuery, useSignupMutation } from "../../../redux/api/auth";
@@ -20,7 +19,6 @@ const SignUpPage = () => {
   const { register, handleSubmit } = useForm<IUser>();
   const router = useRouter();
   const { data: user = null } = useGetMeQuery();
-  const { data: session = null } = useSession();
   const [signup] = useSignupMutation();
 
   const onSubmit: SubmitHandler<IUser> = async (data) => {
@@ -32,8 +30,22 @@ const SignUpPage = () => {
     }
   };
 
+  const signInOAuthHandler = async () => {
+    try {
+      const response = await fetch("/api/v1/auth/signInOAuth", { method: "POST" });
+      const data = await response.json();
+      if (data.url) {
+        router.push(data.url);
+      }
+    } catch (error) {
+      toast.error("Ошибка авторизации через OAuth",error);
+      toast.error("Ошибка аутентификации через Google");
+    }
+  };
+
+
   useEffect(() => {
-    if (user && session) {
+    if (user) {
       router.push("/");
     }
   }, []);
@@ -103,7 +115,9 @@ const SignUpPage = () => {
 
                 <button type="submit">Create Account</button>
                 <center style={{ width: "100%" }}>or</center>
-                <button onClick={() => signIn()}>SIGN IN WITH GOOGLE</button>
+                <button onClick={() => signInOAuthHandler()}>
+                  SIGN IN WITH GOOGLE
+                </button>
                 <Link href={link}>Allready have account?</Link>
               </form>
             </div>

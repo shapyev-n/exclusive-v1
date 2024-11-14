@@ -1,7 +1,6 @@
 import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Menu, IconButton, MenuItem } from "@mui/material";
-import { useSession } from "next-auth/react";
 import { links, linksAuth } from "../../../../../helpers/links";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -18,8 +17,6 @@ export default function MenuBurger({
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const pathName = usePathname();
   const route = useRouter();
-
-  const { data: session } = useSession();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -57,7 +54,7 @@ export default function MenuBurger({
         onClose={handleCloseNavMenu}
         sx={{ display: { xs: "block", md: "none" }, width: "400px" }}
       >
-        {(session || user ? linksAuth : links).map((el, index) => (
+        {(user ? linksAuth : links).map((el, index) => (
           <Link key={index} onClick={handleCloseNavMenu} href={el.href}>
             <MenuItem
               sx={
@@ -90,7 +87,7 @@ export default function MenuBurger({
               }}
             >
               <StyledBadge
-                badgeContent={session || user ? favoriteData?.length : null}
+                badgeContent={user ? favoriteData?.length : null}
                 color="secondary"
               >
                 <IoMdHeartEmpty style={{ fontSize: "26px" }} />
@@ -103,7 +100,7 @@ export default function MenuBurger({
               }}
             >
               <StyledBadge
-                badgeContent={session || user ? basketItems?.length : null}
+                badgeContent={user ? basketItems?.length : null}
                 color="secondary"
               >
                 <IoCartOutline style={{ fontSize: "26px" }} />

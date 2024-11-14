@@ -11,11 +11,10 @@ import {
   Typography,
 } from "@mui/material";
 import scss from "../Header.module.scss";
-import { signOut } from "next-auth/react";
 import { useState } from "react";
 import { logout } from "../../../../../app/(root)/api/v1/auth/logout/actions";
 
-export default function Auth({ user, session }) {
+export default function Auth({ user,  }) {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -28,14 +27,14 @@ export default function Auth({ user, session }) {
 
   return (
     <div className={scss.auth}>
-      {session ||
+      {
         (user && (
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title={session?.user?.email || user.email}>
+            <Tooltip title={ user.email}>
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar
-                  alt={session?.user?.email || user.image}
-                  src={session?.user?.image}
+                  alt={ user.image}
+                  src={user?.image}
                 />
               </IconButton>
             </Tooltip>
@@ -64,10 +63,9 @@ export default function Auth({ user, session }) {
                   gap: "5px",
                 }}
               >
-                <Typography>{session?.user?.name || user.name}</Typography>
-                <Typography>{session?.user?.email || user.email}</Typography>
+                <Typography>{ user.name}</Typography>
+                <Typography>{ user.email}</Typography>
                 {user && <Button onClick={logout}>Logout</Button>}
-                {session && <Button onClick={() => signOut()}>Logout</Button>}
               </MenuItem>
             </Menu>
           </Box>

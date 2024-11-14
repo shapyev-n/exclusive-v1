@@ -1,13 +1,12 @@
 "use client";
 
-import React, {  useEffect,  } from "react";
+import React, { useEffect } from "react";
 import scss from "./SearchPage.module.scss";
 import { useGetSearchQuery } from "../../../redux/api/search";
 import { useSearchQueryStore } from "../../../store/useSearchQueryStore";
 import SkeletonCart from "../SkeletonCart";
 import Link from "next/link";
 import { useGetMeQuery } from "../../../redux/api/auth";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useBasketStore } from "../../../store/basketStore";
@@ -16,7 +15,6 @@ import { useFavoriteStore } from "../../../store/favoriteStore";
 const SearchPage = () => {
   const { query } = useSearchQueryStore();
   const { data: user = null } = useGetMeQuery();
-  const { data: session = null } = useSession();
   const route = useRouter();
   const { basketItems, addToBasket, loadBasket } = useBasketStore();
   const { favoriteData, addToFavorite, loadFavorites } = useFavoriteStore();
@@ -45,7 +43,7 @@ const SearchPage = () => {
     )
       return;
 
-    if (!user?.id && !session) {
+    if (!user?.id) {
       route.push("/sign-in");
       return;
     }
@@ -57,7 +55,7 @@ const SearchPage = () => {
     if (favoriteData.find((favoriteItem) => favoriteItem.id === item.id))
       return;
 
-    if (!user && !session) {
+    if (!user ) {
       route.push("/sign-in");
       return;
     }

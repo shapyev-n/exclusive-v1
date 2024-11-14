@@ -3,7 +3,6 @@ import { useParams, useRouter } from "next/navigation";
 import { useGetItemProductQuery } from "../../../../../redux/api/product";
 import scss from "./DetailsProductPage.module.scss";
 import { useGetMeQuery } from "../../../../../redux/api/auth";
-import { useSession } from "next-auth/react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useEffect } from "react";
 import { useBasketStore } from "../../../../../store/basketStore";
@@ -11,7 +10,6 @@ import { useFavoriteStore } from "../../../../../store/favoriteStore";
 
 export default function DetailsProductPage() {
   const { data: user = null } = useGetMeQuery();
-  const { data: session = null } = useSession();
   const route = useRouter();
   const { id } = useParams();
 
@@ -39,7 +37,7 @@ export default function DetailsProductPage() {
     )
       return;
 
-    if (!user?.id && !session) {
+    if (!user?.id) {
       route.push("/sign-in");
       return;
     }
@@ -51,7 +49,7 @@ export default function DetailsProductPage() {
     if (favoriteData.find((favoriteItem) => favoriteItem.id === item.id))
       return;
 
-    if (!user && !session) {
+    if (!user ) {
       route.push("/sign-in");
       return;
     }

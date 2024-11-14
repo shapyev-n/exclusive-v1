@@ -7,7 +7,6 @@ import SkeletonCart from "../../../../ui/SkeletonCart";
 import Link from "next/link";
 import { useGetMeQuery } from "../../../../../redux/api/auth";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useBasketStore } from "../../../../../store/basketStore";
@@ -16,7 +15,6 @@ import { useFavoriteStore } from "../../../../../store/favoriteStore";
 const BestProducts = () => {
   const { data: timeData = [] } = useGetTimeQuery();
   const { data: user = null } = useGetMeQuery();
-  const { data: session = null } = useSession();
   const route = useRouter();
 
   const { basketItems, addToBasket, loadBasket } = useBasketStore();
@@ -53,7 +51,7 @@ const BestProducts = () => {
     )
       return;
 
-    if (!user?.id && !session) {
+    if (!user?.id ) {
       route.push("/sign-in");
       return;
     }
@@ -65,7 +63,7 @@ const BestProducts = () => {
     if (favoriteData.find((favoriteItem) => favoriteItem.id === item.id))
       return;
 
-    if (!user && !session) {
+    if (!user) {
       route.push("/sign-in");
       return;
     }

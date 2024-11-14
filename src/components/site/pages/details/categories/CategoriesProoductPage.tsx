@@ -1,5 +1,4 @@
 "use client";
-import { useSession } from "next-auth/react";
 import scss from "./CategoriesProoductPage.module.scss";
 import { useGetMeQuery } from "../../../../../redux/api/auth";
 import { useParams, useRouter } from "next/navigation";
@@ -13,7 +12,6 @@ import { useFavoriteStore } from "../../../../../store/favoriteStore";
 
 export default function CategoriesProoductPage() {
   const { data: user = null } = useGetMeQuery();
-  const { data: session = null } = useSession();
   const route = useRouter();
   const { category } = useParams();
 
@@ -41,7 +39,7 @@ export default function CategoriesProoductPage() {
     )
       return;
 
-    if (!user?.id && !session) {
+    if (!user?.id ) {
       route.push("/sign-in");
       return;
     }
@@ -53,7 +51,7 @@ export default function CategoriesProoductPage() {
     if (favoriteData.find((favoriteItem) => favoriteItem.id === item.id))
       return;
 
-    if (!user && !session) {
+    if (!user ) {
       route.push("/sign-in");
       return;
     }

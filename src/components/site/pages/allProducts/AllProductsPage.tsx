@@ -9,7 +9,6 @@ import Timer from "../../../ui/Timer";
 import SkeletonCart from "../../../ui/SkeletonCart";
 import Link from "next/link";
 import { useGetMeQuery } from "../../../../redux/api/auth";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useBasketStore } from "../../../../store/basketStore";
@@ -18,7 +17,6 @@ import { useFavoriteStore } from "../../../../store/favoriteStore";
 export default function AllProductsPage() {
   const { data: timeData = [] } = useGetTimeQuery();
   const { data: user = null } = useGetMeQuery();
-  const { data: session = null } = useSession();
   const route = useRouter();
   const { data: productData, isLoading: productLoading } =
     useGetProductsQuery();
@@ -70,7 +68,7 @@ export default function AllProductsPage() {
     )
       return;
 
-    if (!user?.id && !session) {
+    if (!user?.id ) {
       route.push("/sign-in");
       return;
     }
@@ -82,7 +80,7 @@ export default function AllProductsPage() {
     if (favoriteData.find((favoriteItem) => favoriteItem.id === item.id))
       return;
 
-    if (!user && !session) {
+    if (!user ) {
       route.push("/sign-in");
       return;
     }

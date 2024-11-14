@@ -7,7 +7,6 @@ import Link from "next/link";
 import { useGetTimeQuery } from "../../../../../redux/api/time";
 import "react-toastify/dist/ReactToastify.css";
 import { useGetMeQuery } from "../../../../../redux/api/auth";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useBasketStore } from "../../../../../store/basketStore";
@@ -16,7 +15,6 @@ import { useEffect } from "react";
 
 const Cart = () => {
   const { data: user = null } = useGetMeQuery();
-  const { data: session = null } = useSession();
   const route = useRouter();
 
   const { basketItems, addToBasket, loadBasket } = useBasketStore();
@@ -58,7 +56,7 @@ const Cart = () => {
     )
       return;
 
-    if (!user?.id && !session) {
+    if (!user?.id ) {
       route.push("/sign-in");
       return;
     }
@@ -70,7 +68,7 @@ const Cart = () => {
     if (favoriteData.find((favoriteItem) => favoriteItem.id === item.id))
       return;
 
-    if (!user && !session) {
+    if (!user ) {
       route.push("/sign-in");
       return;
     }

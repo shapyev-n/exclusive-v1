@@ -1,5 +1,4 @@
 "use client";
-import { useSession } from "next-auth/react";
 import { useGetMeQuery } from "../../../../redux/api/auth";
 import { useBasketStore } from "../../../../store/basketStore";
 import { useRouter } from "next/navigation";
@@ -12,7 +11,6 @@ import Image from "next/image";
 
 export default function BasketPage() {
   const { data: user = null, isLoading } = useGetMeQuery();
-  const { data: session = null } = useSession();
   const route = useRouter();
 
   const [windowWidth, setWindowWidth] = useState(0);
@@ -280,7 +278,7 @@ export default function BasketPage() {
             loading...
           </center>
         )}
-        {!isLoading && !user && !session && (
+        {!isLoading && !user &&  (
           <center style={{ padding: "50px 0" }}>
             <Button
               variant="contained"

@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { categories, links, linksAuth } from "../../../../helpers/links";
 import SearchMulti from "../../../shared/SearchMulti";
@@ -34,7 +33,6 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
 export default function Header() {
   const pathName = usePathname();
   const route = useRouter();
-  const { data: session } = useSession();
   const [windowWidth, setWindowWidth] = useState(0);
   const [searchMod, setSearchMod] = useState<boolean>(false);
   const { data: user = null } = useGetMeQuery();
@@ -43,7 +41,6 @@ export default function Header() {
 
   const { basketItems } = useBasketStore();
   const { favoriteData } = useFavoriteStore();
-
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -58,9 +55,7 @@ export default function Header() {
   const isMobile = windowWidth <= 768;
   const isMobileSearch = windowWidth <= 1000;
 
-  const isAdmin =
-    (session && session.user.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) ||
-    (user && user.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL);
+  const isAdmin = user && user.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
 
   const handleCategoryChange = (newCategory) => {
     setSelectedCategory(newCategory);
@@ -97,7 +92,7 @@ export default function Header() {
 
           {!isMobile && (
             <div className={scss.header_nav}>
-              {(session || user ? linksAuth : links).map((el, index) => (
+              {(user ? linksAuth : links).map((el, index) => (
                 <Link
                   key={index}
                   className={`${scss.link} ${
@@ -131,7 +126,7 @@ export default function Header() {
                   onClick={() => route.push("/favorite")}
                 >
                   <StyledBadge
-                    badgeContent={session || user ? favoriteData?.length : null}
+                    badgeContent={user ? favoriteData?.length : null}
                     color="secondary"
                   >
                     <IoMdHeartEmpty className={scss.icon} />
@@ -142,7 +137,7 @@ export default function Header() {
                   onClick={() => route.push("/cart")}
                 >
                   <StyledBadge
-                    badgeContent={session || user ? basketItems?.length : null}
+                    badgeContent={user ? basketItems?.length : null}
                     color="secondary"
                   >
                     <IoCartOutline className={scss.icon} />
@@ -159,7 +154,7 @@ export default function Header() {
                 basketItems={basketItems}
               />
             )}
-            <Auth user={user} session={session} />
+            <Auth user={user} />
           </div>
           {searchMod && <SearchModal setSearchMod={setSearchMod} />}
         </div>

@@ -1,5 +1,4 @@
 "use client";
-import { useSession } from "next-auth/react";
 import { useGetMeQuery } from "../../../../redux/api/auth";
 import scss from "./FavoritesPage.module.scss";
 import { useRouter } from "next/navigation";
@@ -12,7 +11,6 @@ import { Button } from "@mui/material";
 
 export default function FavoritesPage() {
   const { data: user = null, isLoading } = useGetMeQuery();
-  const { data: session = null } = useSession();
   const route = useRouter();
 
   const { basketItems, addToBasket, loadBasket } = useBasketStore();
@@ -39,7 +37,7 @@ export default function FavoritesPage() {
     )
       return;
 
-    if (!user?.id && !session) {
+    if (!user?.id ) {
       route.push("/sign-in");
       return;
     }
@@ -61,7 +59,7 @@ export default function FavoritesPage() {
           {isLoading && (
             <center style={{ margin: "50px auto" }}>loading...</center>
           )}
-          {!isLoading&&!user && !session && (
+          {!isLoading&&!user  && (
             <center style={{ padding: "50px 0" }}>
               <Button
                 variant="contained"

@@ -5,7 +5,6 @@ import scss from "./AdminPage.module.scss";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { useSession } from "next-auth/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "@mui/material";
@@ -19,7 +18,6 @@ export default function AdminPage() {
     reset,
   } = useForm<IProduct>();
   const router = useRouter();
-  const { data: session } = useSession();
   const { data: user = null } = useGetMeQuery();
 
   const onSubmit: SubmitHandler<IProduct> = async (data) => {
@@ -33,15 +31,13 @@ export default function AdminPage() {
     }
   };
 
-  const isAdmin =
-    (session && session.user.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) ||
-    (user && user.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL);
+  const isAdmin = user && user.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
 
   useEffect(() => {
     if (!isAdmin) {
       router.push("/");
     }
-  }, [session, user, router]);
+  }, [user, router]);
 
   return (
     <div className={scss.AdminPage}>
