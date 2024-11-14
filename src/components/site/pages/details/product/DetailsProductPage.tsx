@@ -9,15 +9,13 @@ import { useBasketStore } from "../../../../../store/basketStore";
 import { useFavoriteStore } from "../../../../../store/favoriteStore";
 import Image from "next/image";
 
-// interface getItemsRequest {
-//   id: string;
-// }
+
 
 
 export default function DetailsProductPage() {
   const { data: user = null } = useGetMeQuery();
   const route = useRouter();
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
 
 
   const { basketItems, addToBasket, loadBasket } = useBasketStore();
@@ -30,8 +28,7 @@ export default function DetailsProductPage() {
     }
   }, [user?.id, loadBasket, loadFavorites]);
 
-// const idParam: getItemsRequest = { id: Array.isArray(id) ? id[0] : id };
-const { data = null, error, isLoading } = useGetItemProductQuery(id);
+const { data = null, error, isLoading } = useGetItemProductQuery(Number(id));
 
   const handleAddToBasket = (item) => {
     if (

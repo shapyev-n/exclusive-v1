@@ -4,14 +4,10 @@ namespace PRODUCTS {
   type GetProductsRequest = void;
 
   type getItemsResponse = IProduct;
-  type getItemsRequest = {
-    id: string;
-  };
+  type getItemsRequest = number
 
   type DeleteProductRecponse = void;
-  type DeleteProductRequest = {
-    id: number;
-  };
+  type DeleteProductRequest = number
 }
 
 

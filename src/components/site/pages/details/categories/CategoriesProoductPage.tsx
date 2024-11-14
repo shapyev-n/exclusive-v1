@@ -11,17 +11,15 @@ import { useBasketStore } from "../../../../../store/basketStore";
 import { useFavoriteStore } from "../../../../../store/favoriteStore";
 import Image from "next/image";
 
-// interface GetCategoriesRequest {
-//   category: string;
-// }
-
 export default function CategoriesProoductPage() {
   const { data: user = null } = useGetMeQuery();
   const route = useRouter();
-  const { category } = useParams();
+  const { category } = useParams<{ category: string }>();
 
   const { basketItems, addToBasket, loadBasket } = useBasketStore();
   const { favoriteData, addToFavorite, loadFavorites } = useFavoriteStore();
+  const res = Object.entries(useParams());
+  console.log("res: ", res);
 
   useEffect(() => {
     if (user?.id) {
@@ -36,11 +34,10 @@ export default function CategoriesProoductPage() {
       : `${description.slice(0, maxLength)}...`;
   }
 
-  // const categoryParam: GetCategoriesRequest = {
-  //   category: Array.isArray(category) ? category[0] : category,
-  // };
-
   const { data, isLoading } = useGetCategoriesProductQuery(category);
+
+  console.log("data", data);
+  console.log("category", category);
 
   const handleAddToBasket = (item) => {
     if (

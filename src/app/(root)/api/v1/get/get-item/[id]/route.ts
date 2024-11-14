@@ -3,12 +3,14 @@ import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export const GET = async (
-  request: Request,
-  { params }: { params: { id: string } }
-) => {
+export const GET = async (request: Request, context: { params }) => {
   try {
-    const id = parseInt(params.id);
+    const { id } = await context.params;
+
+    console.log("❌",id);
+    
+
+    // const id = parseInt(params.id);
     if (isNaN(id)) {
       return NextResponse.json(
         { error: "Invalid product ID" },

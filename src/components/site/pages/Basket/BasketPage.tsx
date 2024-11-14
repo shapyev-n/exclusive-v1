@@ -174,7 +174,7 @@ export default function BasketPage() {
                   <Link href={`/details/${el.id}`}>
                     <Image
                       src={el.image}
-                      alt={el.title}
+                      alt='Image for product'
                       width={500}
                       height={500}
                       className={styles.mobImg}

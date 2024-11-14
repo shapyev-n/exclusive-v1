@@ -3,12 +3,9 @@ import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export const GET = async (
-  request: Request,
-  { params }: { params: { category: string } }
-) => {
+export const GET = async (request: Request, context: { params }) => {
   try {
-    const category = params.category;
+    const { category } = await context.params;
 
     const products = await prisma.product.findMany({
       where: {
