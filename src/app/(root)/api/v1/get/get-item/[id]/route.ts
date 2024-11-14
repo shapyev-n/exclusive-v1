@@ -5,12 +5,10 @@ const prisma = new PrismaClient();
 
 export const GET = async (request: Request, context: { params }) => {
   try {
-    const { id } = await context.params;
+    const { id: idParams } = await context.params;
 
-    console.log("❌",id);
-    
 
-    // const id = parseInt(params.id);
+    const id = parseInt(idParams);
     if (isNaN(id)) {
       return NextResponse.json(
         { error: "Invalid product ID" },
@@ -21,10 +19,13 @@ export const GET = async (request: Request, context: { params }) => {
     const product = await prisma.product.findUnique({
       where: { id },
     });
+    console.log("❌user❌", product);
+
 
     if (!product) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
+
 
     return NextResponse.json(product);
   } catch (error) {

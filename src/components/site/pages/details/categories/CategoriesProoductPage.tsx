@@ -18,8 +18,7 @@ export default function CategoriesProoductPage() {
 
   const { basketItems, addToBasket, loadBasket } = useBasketStore();
   const { favoriteData, addToFavorite, loadFavorites } = useFavoriteStore();
-  const res = Object.entries(useParams());
-  console.log("res: ", res);
+
 
   useEffect(() => {
     if (user?.id) {

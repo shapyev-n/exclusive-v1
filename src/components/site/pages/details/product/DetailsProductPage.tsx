@@ -9,14 +9,10 @@ import { useBasketStore } from "../../../../../store/basketStore";
 import { useFavoriteStore } from "../../../../../store/favoriteStore";
 import Image from "next/image";
 
-
-
-
 export default function DetailsProductPage() {
   const { data: user = null } = useGetMeQuery();
   const route = useRouter();
-  const { id } = useParams<{id: string}>();
-
+  const { id } = useParams<{ id: string }>();
 
   const { basketItems, addToBasket, loadBasket } = useBasketStore();
   const { favoriteData, addToFavorite, loadFavorites } = useFavoriteStore();
@@ -28,7 +24,7 @@ export default function DetailsProductPage() {
     }
   }, [user?.id, loadBasket, loadFavorites]);
 
-const { data = null, error, isLoading } = useGetItemProductQuery(Number(id));
+  const { data = null, error, isLoading } = useGetItemProductQuery(Number(id));
 
   const handleAddToBasket = (item) => {
     if (
@@ -49,7 +45,7 @@ const { data = null, error, isLoading } = useGetItemProductQuery(Number(id));
     if (favoriteData.find((favoriteItem) => favoriteItem.id === item.id))
       return;
 
-    if (!user ) {
+    if (!user) {
       route.push("/sign-in");
       return;
     }
