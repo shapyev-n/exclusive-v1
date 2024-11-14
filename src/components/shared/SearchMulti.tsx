@@ -22,7 +22,7 @@ const SearchMulti = () => {
       }
     }
     setQuery(searchValue);
-  }, [searchValue]);
+  }, [searchValue, isFocused, router, setQuery]);
 
   return (
     <div className={scss.search_input_wrapper}>

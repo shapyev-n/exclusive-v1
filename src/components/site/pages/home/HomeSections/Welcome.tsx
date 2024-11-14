@@ -29,7 +29,7 @@ const Welcome = () => {
     } else {
       router.push(`/categories/${selectedCategory}`);
     }
-  }, [selectedCategory]);
+  }, [selectedCategory, router]);
 
   useEffect(() => {
     const handleResize = () => setIsMobileX(window.innerWidth <= 768);

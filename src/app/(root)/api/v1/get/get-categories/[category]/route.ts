@@ -12,7 +12,7 @@ export const GET = async (
 
     const products = await prisma.product.findMany({
       where: {
-        category: category, 
+        category: category,
       },
     });
 

@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import Link from "next/link";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Button } from "@mui/material";
+import Image from "next/image";
 
 export default function FavoritesPage() {
   const { data: user = null, isLoading } = useGetMeQuery();
@@ -22,7 +23,7 @@ export default function FavoritesPage() {
       loadBasket(String(user.id));
       loadFavorites(String(user.id));
     }
-  }, [user?.id]);
+  }, [user?.id, loadBasket, loadFavorites]);
 
   function truncateDescription(description: string, maxLength: number): string {
     return description.length <= maxLength
@@ -37,7 +38,7 @@ export default function FavoritesPage() {
     )
       return;
 
-    if (!user?.id ) {
+    if (!user?.id) {
       route.push("/sign-in");
       return;
     }
@@ -59,7 +60,7 @@ export default function FavoritesPage() {
           {isLoading && (
             <center style={{ margin: "50px auto" }}>loading...</center>
           )}
-          {!isLoading&&!user  && (
+          {!isLoading && !user && (
             <center style={{ padding: "50px 0" }}>
               <Button
                 variant="contained"
@@ -88,7 +89,12 @@ export default function FavoritesPage() {
                   <div className={scss.cart} key={el.id}>
                     <Link href={`/details/${el.id}`}>
                       <div className={scss.svg}>
-                        <img src={el.image} alt={el.title} />
+                        <Image
+                          src={el.image}
+                          width={200}
+                          height={150}
+                          alt={el.title}
+                        />
                       </div>
                     </Link>
                     <div className={scss.btns}>

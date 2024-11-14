@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useBasketStore } from "../../../../../store/basketStore";
 import { useFavoriteStore } from "../../../../../store/favoriteStore";
+import Image from "next/image";
 
 const BestProducts = () => {
   const { data: timeData = [] } = useGetTimeQuery();
@@ -25,7 +26,7 @@ const BestProducts = () => {
       loadBasket(String(user.id));
       loadFavorites(String(user.id));
     }
-  }, [user?.id]);
+  }, [user?.id, loadBasket, loadFavorites]);
 
   const { data: productData, isLoading: productLoading } =
     useGetProductsQuery();
@@ -100,7 +101,7 @@ const BestProducts = () => {
               <div className={scss.cart} key={el.id}>
                 <Link href={`/details/${el.id}`}>
                   <div className={scss.svg}>
-                    <img src={el.image} alt={el.title} />
+                    <Image src={el.image} width={200} height={150} alt={el.title} />
                   </div>
                 </Link>
                 <div className={scss.btns}>

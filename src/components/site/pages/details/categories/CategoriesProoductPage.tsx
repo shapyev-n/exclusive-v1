@@ -5,10 +5,15 @@ import { useParams, useRouter } from "next/navigation";
 import { useGetCategoriesProductQuery } from "../../../../../redux/api/category";
 import SkeletonCart from "../../../../ui/SkeletonCart";
 import Link from "next/link";
-import { useEffect,  } from "react";
+import { useEffect } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useBasketStore } from "../../../../../store/basketStore";
 import { useFavoriteStore } from "../../../../../store/favoriteStore";
+import Image from "next/image";
+
+// interface GetCategoriesRequest {
+//   category: string;
+// }
 
 export default function CategoriesProoductPage() {
   const { data: user = null } = useGetMeQuery();
@@ -23,13 +28,18 @@ export default function CategoriesProoductPage() {
       loadBasket(String(user.id));
       loadFavorites(String(user.id));
     }
-  }, [user?.id]);
+  }, [user?.id, loadBasket, loadFavorites]);
 
   function truncateDescription(description, maxLength) {
     return description.length <= maxLength
       ? description
       : `${description.slice(0, maxLength)}...`;
   }
+
+  // const categoryParam: GetCategoriesRequest = {
+  //   category: Array.isArray(category) ? category[0] : category,
+  // };
+
   const { data, isLoading } = useGetCategoriesProductQuery(category);
 
   const handleAddToBasket = (item) => {
@@ -39,7 +49,7 @@ export default function CategoriesProoductPage() {
     )
       return;
 
-    if (!user?.id ) {
+    if (!user?.id) {
       route.push("/sign-in");
       return;
     }
@@ -51,7 +61,7 @@ export default function CategoriesProoductPage() {
     if (favoriteData.find((favoriteItem) => favoriteItem.id === item.id))
       return;
 
-    if (!user ) {
+    if (!user) {
       route.push("/sign-in");
       return;
     }
@@ -80,7 +90,12 @@ export default function CategoriesProoductPage() {
                 <div className={scss.cart} key={el.id}>
                   <Link href={`/details/${el.id}`}>
                     <div className={scss.svg}>
-                      <img src={el.image} alt={el.title} />
+                      <Image
+                        src={el.image}
+                        width={200}
+                        height={150}
+                        alt={el.title}
+                      />
                     </div>
                   </Link>
                   <div className={scss.btns}>

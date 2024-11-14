@@ -67,7 +67,7 @@ export default function Header() {
     } else {
       route.push(`/categories/${selectedCategory}`);
     }
-  }, [selectedCategory]);
+  }, [selectedCategory, route]);
 
   return (
     <header className={scss.Header}>

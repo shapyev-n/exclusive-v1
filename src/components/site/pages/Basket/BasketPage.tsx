@@ -41,7 +41,7 @@ export default function BasketPage() {
     if (user?.id) {
       loadBasket(String(user.id));
     }
-  }, [user?.id]);
+  }, [user?.id, loadBasket]);
 
   const handleIncrease = (itemId: number) => {
     updateQuantity(String(user?.id), itemId, 1);

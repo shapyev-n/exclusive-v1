@@ -1,8 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import {
-  useGetProductsQuery,
-} from "../../../../redux/api/product";
+import { useGetProductsQuery } from "../../../../redux/api/product";
 import { useGetTimeQuery } from "../../../../redux/api/time";
 import scss from "./AllProductsPage.module.scss";
 import Timer from "../../../ui/Timer";
@@ -13,6 +11,7 @@ import { useRouter } from "next/navigation";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useBasketStore } from "../../../../store/basketStore";
 import { useFavoriteStore } from "../../../../store/favoriteStore";
+import Image from "next/image";
 
 export default function AllProductsPage() {
   const { data: timeData = [] } = useGetTimeQuery();
@@ -22,15 +21,15 @@ export default function AllProductsPage() {
     useGetProductsQuery();
 
   const [sortData, setSortData] = useState("");
- const { basketItems, addToBasket, loadBasket } = useBasketStore();
- const { favoriteData, addToFavorite, loadFavorites } = useFavoriteStore();
+  const { basketItems, addToBasket, loadBasket } = useBasketStore();
+  const { favoriteData, addToFavorite, loadFavorites } = useFavoriteStore();
 
- useEffect(() => {
-   if (user?.id) {
-     loadBasket(String(user.id));
-     loadFavorites(String(user.id));
-   }
- }, [user?.id]);
+  useEffect(() => {
+    if (user?.id) {
+      loadBasket(String(user.id));
+      loadFavorites(String(user.id));
+    }
+  }, [user?.id, loadBasket, loadFavorites]);
 
   function truncateDescription(description, maxLength) {
     return description.length <= maxLength
@@ -68,7 +67,7 @@ export default function AllProductsPage() {
     )
       return;
 
-    if (!user?.id ) {
+    if (!user?.id) {
       route.push("/sign-in");
       return;
     }
@@ -80,7 +79,7 @@ export default function AllProductsPage() {
     if (favoriteData.find((favoriteItem) => favoriteItem.id === item.id))
       return;
 
-    if (!user ) {
+    if (!user) {
       route.push("/sign-in");
       return;
     }
@@ -117,7 +116,12 @@ export default function AllProductsPage() {
               <div className={scss.cart} key={el.id}>
                 <Link href={`/details/${el.id}`}>
                   <div className={scss.svg}>
-                    <img src={el.image} alt={el.title} />
+                    <Image
+                      src={el.image}
+                      width={200}
+                      height={150}
+                      alt={el.title}
+                    />
                   </div>
                 </Link>
                 <div className={scss.btns}>
@@ -188,7 +192,12 @@ export default function AllProductsPage() {
               <div className={scss.cart} key={el.id}>
                 <Link href={`/details/${el.id}`}>
                   <div className={scss.svg}>
-                    <img src={el.image} alt={el.title} />
+                    <Image
+                      src={el.image}
+                      width={200}
+                      height={150}
+                      alt={el.title}
+                    />
                   </div>
                 </Link>
                 <div className={scss.btns}>

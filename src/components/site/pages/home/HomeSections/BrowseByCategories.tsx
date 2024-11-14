@@ -15,12 +15,12 @@ const BrowseByCategories = () => {
   };
 
     useEffect(() => {
-    if (!selectedCategory) {
-      router.push("/");
-    } else {
-      router.push(`/categories/${selectedCategory}`);
-    }
-  }, [selectedCategory]);
+      if (!selectedCategory) {
+        router.push("/");
+      } else {
+        router.push(`/categories/${selectedCategory}`);
+      }
+    }, [selectedCategory, router]);
 
 
 

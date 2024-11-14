@@ -21,7 +21,7 @@ const SearchModal = ({ setSearchMod }) => {
       }
     }
     setQuery(searchValue);
-  }, [searchValue]);
+  }, [searchValue, isFocused, router, setQuery]);
 
   return (
     <div className={scss.modalOverlay}>

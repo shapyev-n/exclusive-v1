@@ -37,7 +37,7 @@ export default function AdminPage() {
     if (!isAdmin) {
       router.push("/");
     }
-  }, [user, router]);
+  }, [user, router, isAdmin]);
 
   return (
     <div className={scss.AdminPage}>

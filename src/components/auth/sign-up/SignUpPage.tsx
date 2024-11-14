@@ -48,7 +48,7 @@ const SignUpPage = () => {
     if (user) {
       router.push("/");
     }
-  }, []);
+  }, [user, router]);
 
   return (
     <section className={scss.SignUpPage}>

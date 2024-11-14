@@ -56,7 +56,7 @@ export default function LoginPage() {
     if (user) {
       router.push("/");
     }
-  }, []);
+  }, [user, router]);
 
   return (
     <section className={scss.LoginPage}>

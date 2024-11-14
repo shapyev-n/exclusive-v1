@@ -7,6 +7,12 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useEffect } from "react";
 import { useBasketStore } from "../../../../../store/basketStore";
 import { useFavoriteStore } from "../../../../../store/favoriteStore";
+import Image from "next/image";
+
+// interface getItemsRequest {
+//   id: string;
+// }
+
 
 export default function DetailsProductPage() {
   const { data: user = null } = useGetMeQuery();
@@ -22,13 +28,10 @@ export default function DetailsProductPage() {
       loadBasket(String(user.id));
       loadFavorites(String(user.id));
     }
-  }, [user?.id]);
+  }, [user?.id, loadBasket, loadFavorites]);
 
-  const {
-    data = null,
-    error,
-    isLoading,
-  } = useGetItemProductQuery(id);
+// const idParam: getItemsRequest = { id: Array.isArray(id) ? id[0] : id };
+const { data = null, error, isLoading } = useGetItemProductQuery(id);
 
   const handleAddToBasket = (item) => {
     if (
@@ -79,7 +82,12 @@ export default function DetailsProductPage() {
       <div className="container">
         <div className={scss.content}>
           <div className={scss.img}>
-            <img src={data?.image} alt={data?.title} />
+            <Image
+              src={data?.image}
+              width={200}
+              height={150}
+              alt={data?.title}
+            />
           </div>
           <div className={scss.about}>
             <h1>{data?.title}</h1>

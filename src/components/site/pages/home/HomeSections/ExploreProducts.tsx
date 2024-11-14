@@ -9,6 +9,7 @@ import Link from "next/link";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useBasketStore } from "../../../../../store/basketStore";
 import { useFavoriteStore } from "../../../../../store/favoriteStore";
+import Image from "next/image";
 
 const ExploreProducts: FC = () => {
   const { data: product, isLoading } = useGetProductsQuery();
@@ -23,7 +24,7 @@ const ExploreProducts: FC = () => {
       loadBasket(String(user.id));
       loadFavorites(String(user.id));
     }
-  }, [user?.id]);
+  }, [user?.id, loadBasket, loadFavorites]);
 
   function truncateDescription(description: string, maxLength: number): string {
     return description.length <= maxLength
@@ -76,7 +77,7 @@ const ExploreProducts: FC = () => {
                 <div className={scss.cart} key={el.id}>
                   <Link href={`/details/${el.id}`}>
                     <div className={scss.svg}>
-                      <img src={el.image} alt={el.title} />
+                      <Image src={el.image} width={220} height={170} alt={el.title} />
                     </div>
                   </Link>
                   <div className={scss.btns}>
