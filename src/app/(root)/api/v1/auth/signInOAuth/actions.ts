@@ -10,12 +10,10 @@ export async function signInWithOAuth(provider: Provider) {
   const {
     data: { url },
     error,
-  } = await (
-    await supabase
-  ).auth.signInWithOAuth({
+  } = await(await supabase).auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: `${process.env.NEXTAUTH_URL}/auth/callback`,
+      redirectTo: `http://localhost:3000/auth/callback`,
     },
   });
 
