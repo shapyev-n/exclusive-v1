@@ -3,7 +3,7 @@
 import { Provider } from "@supabase/supabase-js";
 import scss from "./Auth.module.scss";
 import GoogleIcon from "@mui/icons-material/Google";
-import { signInWithOAuth } from "../../app/(root)/api/v1/auth/signInOAuth/route";
+import { signInWithOAuth } from "../../app/(root)/api/v1/auth/signInOAuth/actions";
 
 interface ButtonData {
   label: string;
