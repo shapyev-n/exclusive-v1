@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useGetMeQuery, useSignupMutation } from "../../../redux/api/auth";
+import { OAuthButton } from "../OAuthSignIn";
 
 const img =
   "https://cdni.iconscout.com/illustration/premium/thumb/sign-up-illustration-download-in-svg-png-gif-file-formats--account-login-miscellaneous-pack-illustrations-5230178.png?f=webp";
@@ -30,18 +31,6 @@ const SignUpPage = () => {
     }
   };
 
-  const signInOAuthHandler = async () => {
-    try {
-      const response = await fetch("/api/v1/auth/signInOAuth", { method: "POST" });
-      const data = await response.json();
-      if (data.url) {
-        router.push(data.url);
-      }
-    } catch (error) {
-      toast.error("Ошибка авторизации через OAuth",error);
-      toast.error("Ошибка аутентификации через Google");
-    }
-  };
 
 
   useEffect(() => {
@@ -62,8 +51,12 @@ const SignUpPage = () => {
             <div className={scss.signUp_auth}>
               <div className={scss.signUp_text}>
                 <h1>Create an account</h1>
+                <OAuthButton />
+                <center style={{ width: "100%" }}>or</center>
+
                 <span>Enter your details below</span>
               </div>
+
               <form
                 className={scss.signUp_inputs}
                 onSubmit={handleSubmit(onSubmit)}
@@ -114,12 +107,8 @@ const SignUpPage = () => {
                 </span>
 
                 <button type="submit">Create Account</button>
-                <center style={{ width: "100%" }}>or</center>
-                <button onClick={() => signInOAuthHandler()}>
-                  SIGN IN WITH GOOGLE
-                </button>
-                <Link href={link}>Allready have account?</Link>
               </form>
+              <Link href={link}>Allready have account?</Link>
             </div>
           </div>
         </div>

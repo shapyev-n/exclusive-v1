@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useGetMeQuery, useLoginMutation } from "../../../redux/api/auth";
+import { OAuthButton } from "../OAuthSignIn";
 
 interface IUser {
   email: string;
@@ -38,20 +39,7 @@ export default function LoginPage() {
       toast.error(error);
     }
   };
-  const signInOAuthHandler = async () => {
-    try {
-      const response = await fetch("/api/v1/auth/signInOAuth", {
-        method: "POST",
-      });
-      const data = await response.json();
-      if (data.url) {
-        router.push(data.url);
-      }
-    } catch (error) {
-      toast.error("Ошибка авторизации через OAuth", error);
-      toast.error("Ошибка аутентификации через Google");
-    }
-  };
+
   useEffect(() => {
     if (user) {
       router.push("/");
@@ -75,6 +63,10 @@ export default function LoginPage() {
             <div className={scss.signUp_auth}>
               <div className={scss.signUp_text}>
                 <h1>Login</h1>
+                <OAuthButton />
+
+                <center style={{ width: "100%" }}>or</center>
+
                 <span>Enter your details below</span>
               </div>
               <form
@@ -119,10 +111,6 @@ export default function LoginPage() {
                 </span>
 
                 <button type="submit">Login</button>
-                <center style={{ width: "100%" }}>or</center>
-                <button onClick={() => signInOAuthHandler()}>
-                  SIGN IN WITH GOOGLE
-                </button>
 
                 <Link href={link}>{`Don't`} have an account? Sign up</Link>
               </form>

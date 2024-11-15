@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { createClient } from "../../../../../../../utils/supabase/server";
 
-
 const prisma = new PrismaClient();
 
 export const POST = async (request: Request) => {
@@ -37,7 +36,6 @@ export const POST = async (request: Request) => {
         { status: 500 }
       );
     }
-
 
     // Создание пользователя в базе данных Prisma
     const newUser = await prisma.user.create({

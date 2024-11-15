@@ -1,16 +1,30 @@
-// Создайте API-роут, например, /api/auth/signInOAuth.ts
-import { NextResponse } from "next/server";
+"use server";
+
+import { Provider } from "@supabase/supabase-js";
+import { redirect } from "next/navigation";
 import { createClient } from "../../../../../../../utils/supabase/server";
 
-export async function POST() {
+export async function signInWithOAuth(provider: Provider) {
   const supabase = createClient();
-  const { data, error } = await (await supabase).auth.signInWithOAuth({
-    provider: "google",
-    options: { redirectTo: process.env.NEXTAUTH_URL },
+
+  const {
+    data: { url },
+    error,
+  } = await (
+    await supabase
+  ).auth.signInWithOAuth({
+    provider,
+    options: {
+      redirectTo: `${process.env.NEXTAUTH_URL}/auth/callback`,
+    },
   });
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+
+  if (url) {
+    redirect(url);
   }
-  
-  return NextResponse.json({ url: data.url });
+  console.log("❤️‍🔥url❤️‍🔥", url);
+
+  if (error) {
+    redirect("/sign-in?message=No provider selected");
+  }
 }
