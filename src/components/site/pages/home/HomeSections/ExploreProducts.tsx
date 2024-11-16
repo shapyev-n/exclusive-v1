@@ -1,7 +1,10 @@
 "use client";
 import React, { FC, useEffect } from "react";
 import scss from "./ExploreProducts.module.scss";
-import { useGetProductsQuery } from "../../../../../redux/api/product";
+import {
+  useDeleteProductMutation,
+  useGetProductsQuery,
+} from "../../../../../redux/api/product";
 import SkeletonCart from "../../../../ui/SkeletonCart";
 import { useGetMeQuery } from "../../../../../redux/api/auth";
 import { useRouter } from "next/navigation";
@@ -14,6 +17,7 @@ import Image from "next/image";
 const ExploreProducts: FC = () => {
   const { data: product, isLoading } = useGetProductsQuery();
   const { data: user = null } = useGetMeQuery();
+  const [deleteProduct, { isLoading: delLoad }] = useDeleteProductMutation();
   const route = useRouter();
 
   const { basketItems, addToBasket, loadBasket } = useBasketStore();
@@ -39,7 +43,7 @@ const ExploreProducts: FC = () => {
     )
       return;
 
-    if (!user?.id ) {
+    if (!user?.id) {
       route.push("/sign-in");
       return;
     }
@@ -51,13 +55,24 @@ const ExploreProducts: FC = () => {
     if (favoriteData.find((favoriteItem) => favoriteItem.id === item.id))
       return;
 
-    if (!user ) {
+    if (!user) {
       route.push("/sign-in");
       return;
     }
 
     addToFavorite(String(user.id), item);
   };
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteProduct(id).unwrap();
+      alert("Product deleted successfully");
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
+
+  const isAdmin = user && user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
 
   return (
     <section className={scss.ExploreProducts}>
@@ -77,7 +92,12 @@ const ExploreProducts: FC = () => {
                 <div className={scss.cart} key={el.id}>
                   <Link href={`/details/${el.id}`}>
                     <div className={scss.svg}>
-                      <Image src={el.image} width={220} height={170} alt={el.title} />
+                      <Image
+                        src={el.image}
+                        width={220}
+                        height={170}
+                        alt={el.title}
+                      />
                     </div>
                   </Link>
                   <div className={scss.btns}>
@@ -129,6 +149,26 @@ const ExploreProducts: FC = () => {
                     )}
                     {!el.salePrice && <p>{el.price}$</p>}
                   </div>
+                  {isAdmin && delLoad && (
+                    <button
+                      style={{ padding: "10px", marginTop: "auto" }}
+                      disabled
+                    >
+                      Deleting...
+                    </button>
+                  )}
+                  {isAdmin && !delLoad && (
+                    <button
+                      style={{
+                        padding: "10px",
+                        marginTop: "auto",
+                        background: "red",
+                      }}
+                      onClick={() => handleDelete(el.id)}
+                    >
+                      Delete
+                    </button>
+                  )}
                 </div>
               ))}
           </div>

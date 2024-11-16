@@ -17,7 +17,7 @@ const api = index.injectEndpoints({
       }),
       invalidatesTags: ["auth"],
     }),
-       signup: builder.mutation<AUTH.SignupResponse, AUTH.SignupRequest>({
+    signup: builder.mutation<AUTH.SignupResponse, AUTH.SignupRequest>({
       query: (data) => ({
         url: "/auth/sign-up",
         method: "POST",
@@ -25,7 +25,20 @@ const api = index.injectEndpoints({
       }),
       invalidatesTags: ["auth"],
     }),
+
+    signout: builder.mutation<AUTH.SingnOutResponse, void>({
+      query: () => ({
+        url: "/auth/logout",
+        method: "POST",
+      }),
+      invalidatesTags: ["auth"],
+    }),
   }),
 });
 
-export const { useGetMeQuery, useLoginMutation, useSignupMutation } = api;
+export const {
+  useGetMeQuery,
+  useLoginMutation,
+  useSignupMutation,
+  useSignoutMutation,
+} = api;

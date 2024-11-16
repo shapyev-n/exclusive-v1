@@ -13,6 +13,10 @@ export const DELETE = async (request: NextRequest) => {
     });
     return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json(error);
+    console.error("Error deleting product:", error);
+    return NextResponse.json(
+      { error: "Failed to delete product. Ensure the ID is correct." },
+      { status: 500 }
+    );
   }
 };

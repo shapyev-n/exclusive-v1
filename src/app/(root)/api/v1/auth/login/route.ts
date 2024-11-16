@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { createClient } from "../../../../../../../utils/supabase/server";
-import { revalidatePath } from "next/cache";
 
 
 export const POST = async (request: Request) => {
@@ -23,7 +22,6 @@ export const POST = async (request: Request) => {
     if (error) {
       console.error("error", error);
     }
-    revalidatePath("/");
     return NextResponse.json(data);
   } catch (error) {
     console.error("Ошибка создания пользователя:", error);

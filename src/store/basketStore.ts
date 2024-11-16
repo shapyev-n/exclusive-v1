@@ -3,13 +3,18 @@ import { persist } from "zustand/middleware";
 
 interface IBasketItem {
   id: number;
-  title: string;
+  userId: string;
   image: string;
+  title: string;
+  description: string;
   price: number;
   salePrice?: number;
-  quantity: number;
+  category: string;
+  BestSellingProducts: string | number;
   count: number;
-  userId: string;
+  quantity: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface BasketStore {
@@ -43,7 +48,7 @@ export const useBasketStore = create<BasketStore>()(
                     ...basketItem,
                     quantity: Math.min(
                       basketItem.quantity + item.quantity,
-                      basketItem.count // Ensure quantity doesn't exceed count
+                      basketItem.count 
                     ),
                   }
                 : basketItem

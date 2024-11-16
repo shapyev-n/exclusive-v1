@@ -1,94 +1,83 @@
-interface IBasket {
-  id: number;
-  userId: string;
-  totalCount: number;
-  totalPrice: number;
-  items: IBasketItem[];
-}
-
-
-
-
-
-// interface IBasketItem extends IProduct {
-//   quantity: number;
-//   basket: IBasket[];
+// interface IBasket {
+//   id: number;
+//   userId: string;
+//   totalCount: number;
+//   totalPrice: number;
+//   items: IBasketItem[];
 // }
 
-// interface IFavorite extends IProduct {
-//   quantity: number;
-//   basket: IBasket[];
+// interface ICheck {
+//   id: number;
+//   userId: string;
+//   totalCount: number;
+//   totalPrice: number;
+//   items: ICheckItem[];
 // }
 
+// interface ICheckItem {
+//   id: number;
+//   userId: string;
+//   quantity: number;
+//   price: number;
+//   salePrice: number;
+//   image: string;
+//   title: string;
+//   count: number;
+//   basket: ICheck[];
+//   User: IUser[];
+// }
 
+// // interface IBasketItem extends IProduct {
+// //   quantity: number;
+// //   basket: IBasket[];
+// // }
 
-//! Создание корзины, если её нет в `localStorage` для конкретного `userId`
-export function initializeBasket(userId: string) {
-  const basketKey = `basket_user_${userId}`;
-  if (!localStorage.getItem(basketKey)) {
-    const initialBasket: IBasket = {
-      id: Date.now(),
-      userId,
-      items: [],
-      totalCount: 0,
-      totalPrice: 0,
-    };
-    localStorage.setItem(basketKey, JSON.stringify(initialBasket));
-  }
-}
+// // interface IFavorite extends IProduct {
+// //   quantity: number;
+// //   basket: IBasket[];
+// // }
 
-//! Добавление товара в корзину
-export function addToBasket(userId: string, newItem: IBasketItem): boolean {
-  const basketKey = `basket_user_${userId}`;
-  const basket: IBasket = JSON.parse(localStorage.getItem(basketKey) || '{"items": []}');
+// //! Создание корзины, если её нет в `localStorage` для конкретного `userId`
+// export function initializeCheck(userId: string) {
+//   const basketKey = `check_user_${userId}`;
+//   if (!localStorage.getItem(basketKey)) {
+//     const initialBasket: IBasket = {
+//       id: Date.now(),
+//       userId,
+//       items: [],
+//       totalCount: 0,
+//       totalPrice: 0,
+//     };
+//     localStorage.setItem(basketKey, JSON.stringify(initialBasket));
+//   }
+// }
 
-  const existingItem = basket.items.find((item) => item.id === newItem.id);
-  if (existingItem) {
-    existingItem.quantity += newItem.quantity;
-  } else {
-    basket.items.push(newItem);
-  }
-
-  // Пересчитываем totalCount и totalPrice
-  basket.totalCount = basket.items.reduce((count, item) => count + item.quantity, 0);
-  basket.totalPrice = basket.items.reduce((total, item) => {
-    const price = item.salePrice ?? item.price;
-    return total + price * item.quantity;
-  }, 0);
-
-  try {
-    localStorage.setItem(basketKey, JSON.stringify(basket));
-    return true;
-  } catch (error) {
-    console.error("Ошибка сохранения корзины:", error);
-    return false;
-  }
-}
-
-// export function addToBasket(userId: string, newItem: IBasketItem): boolean {
-//   const basketKey = `basket_user_${userId}`;
-//   const basket: IBasket = JSON.parse(
-//     localStorage.getItem(basketKey) || '{"items": []}'
+// //! Добавление товара в корзину
+// export function addToCheck(userId: string, newItem: IBasketItem): boolean {
+//   const CheckKey = `check_user_${userId}`;
+//   const check: IBasket = JSON.parse(
+//     localStorage.getItem(CheckKey) || '{"items": []}'
 //   );
 
-//   const existingItem = basket.items.find((item) => item.id === newItem.id);
+//   const existingItem = check.items.find((item) => item.id === newItem.id);
 //   if (existingItem) {
 //     existingItem.quantity += newItem.quantity;
 //   } else {
-//     basket.items.push(newItem);
+//     check.items.push(newItem);
 //   }
 
-//   basket.totalCount = basket.items.reduce(
-//     (count, item) => count + item.quantity as number,
+//   // Пересчитываем totalCount и totalPrice
+//   check.totalCount = check.items.reduce(
+//     (count, item) => count + item.quantity,
 //     0
 //   );
-//   basket.totalPrice = basket.items.reduce((total, item) => {
-//     const price = item.salePrice as number ?? item.price as number;
-//     return total + price * item.quantity as number;
+//   check.totalPrice = check.items.reduce((total, item) => {
+//     const price = item.salePrice ?? item.price;
+//     return total + price * item.quantity;
 //   }, 0);
 
 //   try {
-//     localStorage.setItem(basketKey, JSON.stringify(basket));
+//     localStorage.setItem(CheckKey, JSON.stringify(check));
 //     return true;
 //   } catch (error) {
 //     console.error("Ошибка сохранения корзины:", error);
@@ -96,106 +85,137 @@ export function addToBasket(userId: string, newItem: IBasketItem): boolean {
 //   }
 // }
 
-//! Получение корзины
-export function getBasket(userId: string): IBasket {
-  const basketKey = `basket_user_${userId}`;
-  return JSON.parse(
-    localStorage.getItem(basketKey) ||
-      '{"items": [], "totalCount": 0, "totalPrice": 0}'
-  );
-}
+// // export function addToBasket(userId: string, newItem: IBasketItem): boolean {
+// //   const basketKey = `basket_user_${userId}`;
+// //   const basket: IBasket = JSON.parse(
+// //     localStorage.getItem(basketKey) || '{"items": []}'
+// //   );
 
-//! Удаление товара из корзины
-export function removeFromBasket(userId: string, itemId: number) {
-  const basketKey = `basket_user_${userId}`;
-  const basket: IBasket = JSON.parse(
-    localStorage.getItem(basketKey) || '{"items": []}'
-  );
+// //   const existingItem = basket.items.find((item) => item.id === newItem.id);
+// //   if (existingItem) {
+// //     existingItem.quantity += newItem.quantity;
+// //   } else {
+// //     basket.items.push(newItem);
+// //   }
 
-  basket.items = basket.items.filter((item) => item.id !== itemId);
+// //   basket.totalCount = basket.items.reduce(
+// //     (count, item) => count + item.quantity as number,
+// //     0
+// //   );
+// //   basket.totalPrice = basket.items.reduce((total, item) => {
+// //     const price = item.salePrice as number ?? item.price as number;
+// //     return total + price * item.quantity as number;
+// //   }, 0);
 
-  //! Пересчитываем общие количество и цену
-  basket.totalCount = basket.items.reduce(
-    (count, item) => count + item.quantity,
-    0
-  );
-  basket.totalPrice = basket.items.reduce((total, item) => {
-    const price = item.salePrice ?? item.price;
-    return total + price * item.quantity;
-  }, 0);
+// //   try {
+// //     localStorage.setItem(basketKey, JSON.stringify(basket));
+// //     return true;
+// //   } catch (error) {
+// //     console.error("Ошибка сохранения корзины:", error);
+// //     return false;
+// //   }
+// // }
 
-  localStorage.setItem(basketKey, JSON.stringify(basket));
-}
+// //! Получение корзины
+// export function getChech(userId: string): IBasket {
+//   const basketKey = `check_user_${userId}`;
+//   return JSON.parse(
+//     localStorage.getItem(basketKey) ||
+//       '{"items": [], "totalCount": 0, "totalPrice": 0}'
+//   );
+// }
 
-//! Создание избранного, если его нет в `localStorage` для конкретного `userId`
-export function initializeFavorite(userId: string) {
-  const favoriteKey = `favorite_user_${userId}`;
-  if (!localStorage.getItem(favoriteKey)) {
-    localStorage.setItem(favoriteKey, JSON.stringify([]));
-  }
-}
+// //! Удаление товара из корзины
+// export function removeFromBasket(userId: string, itemId: number) {
+//   const basketKey = `basket_user_${userId}`;
+//   const basket: IBasket = JSON.parse(
+//     localStorage.getItem(basketKey) || '{"items": []}'
+//   );
 
-//! Добавление товара в избранное с учетом уникальности
-export function addToFavorite(userId: string, newItem: IFavorite) {
-  const favoriteKey = `favorite_user_${userId}`;
-  const favorite: IFavorite[] = JSON.parse(
-    localStorage.getItem(favoriteKey) || "[]"
-  );
+//   basket.items = basket.items.filter((item) => item.id !== itemId);
 
-  if (!favorite.find((item) => item.id === newItem.id)) {
-    favorite.push(newItem);
-    localStorage.setItem(favoriteKey, JSON.stringify(favorite));
-  }
-}
+//   //! Пересчитываем общие количество и цену
+//   basket.totalCount = basket.items.reduce(
+//     (count, item) => count + item.quantity,
+//     0
+//   );
+//   basket.totalPrice = basket.items.reduce((total, item) => {
+//     const price = item.salePrice ?? item.price;
+//     return total + price * item.quantity;
+//   }, 0);
 
-//! Удаление товара из избранного
-export function removeFromFavorite(userId: string, itemId: number) {
-  const favoriteKey = `favorite_user_${userId}`;
-  const favorite: IFavorite[] = JSON.parse(
-    localStorage.getItem(favoriteKey) || "[]"
-  );
-  const updatedFavorite = favorite.filter((item) => item.id !== itemId);
-  localStorage.setItem(favoriteKey, JSON.stringify(updatedFavorite));
-}
+//   localStorage.setItem(basketKey, JSON.stringify(basket));
+// }
 
-//! Получение избранного
-export function getFavorite(userId: string): IFavorite[] {
-  const favoriteKey = `favorite_user_${userId}`;
-  return JSON.parse(localStorage.getItem(favoriteKey) || "[]");
-}
+// //! Создание избранного, если его нет в `localStorage` для конкретного `userId`
+// export function initializeFavorite(userId: string) {
+//   const favoriteKey = `favorite_user_${userId}`;
+//   if (!localStorage.getItem(favoriteKey)) {
+//     localStorage.setItem(favoriteKey, JSON.stringify([]));
+//   }
+// }
 
-// Usage example:
+// //! Добавление товара в избранное с учетом уникальности
+// export function addToFavorite(userId: string, newItem: IFavorite) {
+//   const favoriteKey = `favorite_user_${userId}`;
+//   const favorite: IFavorite[] = JSON.parse(
+//     localStorage.getItem(favoriteKey) || "[]"
+//   );
 
-// import {
-//   initializeBasket,
-//   addToBasket,
-//   getBasket,
-//   initializeFavorite,
-//   addToFavorite,
-//   getFavorite,
-// } from "./path/to/your/functions";
+//   if (!favorite.find((item) => item.id === newItem.id)) {
+//     favorite.push(newItem);
+//     localStorage.setItem(favoriteKey, JSON.stringify(favorite));
+//   }
+// }
 
-// const userId = 123; // Пример userId текущего пользователя
+// //! Удаление товара из избранного
+// export function removeFromFavorite(userId: string, itemId: number) {
+//   const favoriteKey = `favorite_user_${userId}`;
+//   const favorite: IFavorite[] = JSON.parse(
+//     localStorage.getItem(favoriteKey) || "[]"
+//   );
+//   const updatedFavorite = favorite.filter((item) => item.id !== itemId);
+//   localStorage.setItem(favoriteKey, JSON.stringify(updatedFavorite));
+// }
 
-//? Инициализация корзины и избранного
-// initializeBasket(userId);
-// initializeFavorite(userId);
+// //! Получение избранного
+// export function getFavorite(userId: string): IFavorite[] {
+//   const favoriteKey = `favorite_user_${userId}`;
+//   return JSON.parse(localStorage.getItem(favoriteKey) || "[]");
+// }
 
-//? Добавление товара в корзину
-// addToBasket(userId, {
-//   id: 1,
-//   title: "Продукт 1",
-//   price: 100,
-//   quantity: 1,
-// });
+// // Usage example:
 
-//? Получение корзины
-// const basket = getBasket(userId);
-// console.log(basket);
+// // import {
+// //   initializeBasket,
+// //   addToBasket,
+// //   getBasket,
+// //   initializeFavorite,
+// //   addToFavorite,
+// //   getFavorite,
+// // } from "./path/to/your/functions";
 
-//? Добавление товара в избранное
-// addToFavorite(userId, 1);
+// // const userId = 123; // Пример userId текущего пользователя
 
-//? Получение избранного
-// const favorite = getFavorite(userId);
-// console.log(favorite);
+// //? Инициализация корзины и избранного
+// // initializeBasket(userId);
+// // initializeFavorite(userId);
+
+// //? Добавление товара в корзину
+// // addToBasket(userId, {
+// //   id: 1,
+// //   title: "Продукт 1",
+// //   price: 100,
+// //   quantity: 1,
+// // });
+
+// //? Получение корзины
+// // const basket = getBasket(userId);
+// // console.log(basket);
+
+// //? Добавление товара в избранное
+// // addToFavorite(userId, 1);
+
+// //? Получение избранного
+// // const favorite = getFavorite(userId);
+// // console.log(favorite);

@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
       "kkqxjbxodiygcrsurrfs.supabase.co",
       "www.apple.com",
       "store.storeimages.cdn-apple.com",
+      "s3-alpha-sig.figma.com",
     ],
   },
 };

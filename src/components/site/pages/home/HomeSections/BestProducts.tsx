@@ -77,7 +77,7 @@ const BestProducts = () => {
     .map((el) => new Date(el?.time))[0];
 
   if (targetDate2) {
-    targetDate2.setHours(targetDate2.getHours() + 100);
+    targetDate2.setHours(targetDate2.getHours() + 720);
   }
 
   return (

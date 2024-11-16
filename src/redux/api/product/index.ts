@@ -30,7 +30,14 @@ const api = index.injectEndpoints({
       }),
       providesTags: ["details"],
     }),
-
+    deleteProduct: builder.mutation({
+      query: (id) => ({
+        url: `/delete`,
+        method: "DELETE",
+        body: { id },
+      }),
+      invalidatesTags: ["product"], 
+    }),
   }),
 });
 
@@ -38,4 +45,5 @@ export const {
   useGetProductsQuery,
   useAddToBasketMutation,
   useGetItemProductQuery,
+  useDeleteProductMutation
 } = api;

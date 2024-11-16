@@ -42,7 +42,7 @@ const Cart = () => {
     .filter((el) => el?.name === "cart")
     .map((el) => new Date(el?.time))[0];
   if (targetDate) {
-    targetDate.setHours(targetDate.getHours() + 120);
+    targetDate.setHours(targetDate.getHours() + 720);
   }
 
   const productDataCart = productData
@@ -57,7 +57,7 @@ const Cart = () => {
     )
       return;
 
-    if (!user?.id ) {
+    if (!user?.id) {
       route.push("/sign-in");
       return;
     }
@@ -69,13 +69,16 @@ const Cart = () => {
     if (favoriteData.find((favoriteItem) => favoriteItem.id === item.id))
       return;
 
-    if (!user ) {
+    if (!user) {
       route.push("/sign-in");
       return;
     }
 
     addToFavorite(String(user.id), item);
   };
+
+
+
 
   return (
     <section className={scss.Cart}>
@@ -99,7 +102,12 @@ const Cart = () => {
                 <div className={scss.cart} key={el.id}>
                   <Link href={`/details/${el.id}`}>
                     <div className={scss.svg}>
-                      <Image src={el.image} width={200} height={150} alt={el.title} />
+                      <Image
+                        src={el.image}
+                        width={200}
+                        height={150}
+                        alt={el.title}
+                      />
                     </div>
                   </Link>
                   <div className={scss.btns}>

@@ -12,28 +12,33 @@ import {
 } from "@mui/material";
 import scss from "../Header.module.scss";
 import { useState } from "react";
-import { logout } from "../../../../../app/(root)/api/v1/auth/logout/actions";
+import { useSignoutMutation } from "../../../../../redux/api/auth";
 import { useRouter } from "next/navigation";
 
 export default function Auth({ user }) {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
+  const router = useRouter();
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
 
-  const router = useRouter();
+  const [signout, { isLoading }] = useSignoutMutation();
 
   const handleLogout = async () => {
-    const result = await logout();
-    if (result.success) {
-      router.push("/");
-    } else {
-      alert(result.error);
+    try {
+      const result = await signout().unwrap();
+      if (result.success) {
+        console.log("Logout successful");
+      } else {
+        alert(result.error || "An error occurred");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+      alert("Error during logout");
     }
   };
 
@@ -43,10 +48,7 @@ export default function Auth({ user }) {
         <Box sx={{ flexGrow: 0 }}>
           <Tooltip title={user.email}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar
-                alt={user.user_metadata.picture}
-                src={user?.user_metadata.avatar_url}
-              />
+              <Avatar alt={user.email} src={user?.user_metadata.avatar_url} />
             </IconButton>
           </Tooltip>
           <Menu
@@ -76,12 +78,18 @@ export default function Auth({ user }) {
             >
               <Typography>{user.name}</Typography>
               <Typography>{user.email}</Typography>
-              <Button onClick={() => handleLogout()}>Logout</Button>
+              <Button onClick={handleLogout} disabled={isLoading}>
+                {isLoading ? "Logging out..." : "Logout"}
+              </Button>
             </MenuItem>
           </Menu>
         </Box>
       )}
-      {}
+      {!user && (
+        <IconButton onClick={() => router.push("/sign-in")} sx={{ p: 0 }}>
+          <Avatar alt="login" src="avatar" />
+        </IconButton>
+      )}
     </div>
   );
 }
