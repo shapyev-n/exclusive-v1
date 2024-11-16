@@ -9,9 +9,7 @@ import { Button, IconButton } from "@mui/material";
 import cartEmpty from "../../../../assets/cartEmpty.png";
 import Image from "next/image";
 import PaymentPage from "./PaymentPage";
-import {
-  generateCheck,
-} from "../../../../helpers/generate-check";
+import { generateCheck } from "../../../../helpers/generate-check";
 
 export default function BasketPage() {
   const { data: user = null, isLoading } = useGetMeQuery();
@@ -70,6 +68,15 @@ export default function BasketPage() {
     setMyCheck(check);
   };
 
+  const sx = {
+    width: "30px",
+    height: "30px",
+    background: "#000",
+    color: "#fff",
+    "&:hover": {
+      background: "#000",
+    },
+  };
 
   return (
     <>
@@ -146,12 +153,7 @@ export default function BasketPage() {
                           }
                         >
                           <IconButton
-                            sx={{
-                              width: "30px",
-                              height: "30px",
-                              background: "#000",
-                              color: "#fff",
-                            }}
+                            sx={sx}
                             onClick={() => handleDecrease(el.id)}
                             disabled={el.quantity <= 1}
                           >
@@ -159,12 +161,7 @@ export default function BasketPage() {
                           </IconButton>
                           {el.quantity}
                           <IconButton
-                            sx={{
-                              width: "30px",
-                              height: "30px",
-                              background: "#000",
-                              color: "#fff",
-                            }}
+                            sx={sx}
                             onClick={() => handleIncrease(el.id)}
                             disabled={el.quantity >= el.count}
                           >
@@ -217,12 +214,7 @@ export default function BasketPage() {
                     </p>
                     <div className={styles.mobQuantity}>
                       <IconButton
-                        sx={{
-                          width: "30px",
-                          height: "30px",
-                          background: "#000",
-                          color: "#fff",
-                        }}
+                        sx={sx}
                         onClick={() => handleDecrease(el.id)}
                         disabled={el.quantity <= 1}
                       >
@@ -230,12 +222,7 @@ export default function BasketPage() {
                       </IconButton>
                       {el.quantity}
                       <IconButton
-                        sx={{
-                          width: "30px",
-                          height: "30px",
-                          background: "#000",
-                          color: "#fff",
-                        }}
+                        sx={sx}
                         onClick={() => handleIncrease(el.id)}
                         disabled={el.quantity >= el.count}
                       >

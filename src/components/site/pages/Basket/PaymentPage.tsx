@@ -76,13 +76,10 @@ export default function PaymentPage({
     });
     handleAdtoCheck();
     setOpenCheckModal(!openCheckModal);
-    setModal(!modal);
 
     toast.success("Your message has been sent successfully!");
     reset();
   };
-
-  // downloadCheck()
 
   return (
     <div className={scss.rowPay}>
@@ -265,7 +262,10 @@ export default function PaymentPage({
             </button>
             <button
               className={scss.closeCheck}
-              onClick={() => setOpenCheckModal(!openCheckModal)}
+              onClick={() => {
+                setOpenCheckModal(!openCheckModal);
+                setModal(!modal);
+              }}
             >
               close
             </button>
