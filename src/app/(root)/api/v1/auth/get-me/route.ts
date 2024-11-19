@@ -6,6 +6,8 @@ export const GET = async () => {
   try {
     const supabase = await createClient();
     const { data } = await supabase.auth.getUser();
+    console.log("Пользователь", data);
+
     const user = data.user;
 
     revalidatePath("/");
