@@ -77,9 +77,6 @@ const Cart = () => {
     addToFavorite(String(user.id), item);
   };
 
-
-
-
   return (
     <section className={scss.Cart}>
       <div className="container">
