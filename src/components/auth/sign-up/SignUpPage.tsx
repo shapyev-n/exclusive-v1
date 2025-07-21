@@ -51,8 +51,8 @@ const SignUpPage = () => {
             <div className={scss.signUp_auth}>
               <div className={scss.signUp_text}>
                 <h1>Create an account</h1>
-                <OAuthButton />
-                <center style={{ width: "100%" }}>or</center>
+                {/* <OAuthButton />
+                <center style={{ width: "100%" }}>or</center> */}
 
                 <span>Enter your details below</span>
               </div>

@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useGetMeQuery, useLoginMutation } from "../../../redux/api/auth";
-import { OAuthButton } from "../OAuthSignIn";
+// import { OAuthButton } from "../OAuthSignIn";
 
 interface IUser {
   email: string;
@@ -63,9 +63,9 @@ export default function LoginPage() {
             <div className={scss.signUp_auth}>
               <div className={scss.signUp_text}>
                 <h1>Login</h1>
-                <OAuthButton />
+                {/* <OAuthButton />
 
-                <center style={{ width: "100%" }}>or</center>
+                <center style={{ width: "100%" }}>or</center> */}
 
                 <span>Enter your details below</span>
               </div>
